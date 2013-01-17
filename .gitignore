@@ -1,0 +1,28 @@
+## MAC OS
+.DS_Store
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS & KDevelop/Kate/KWrite
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+
+## Nano
+*.save
+
+## PROJECT::GENERAL
+coverage
+rdoc
+pkg
+
+## PROJECT::SPECIFIC
+*.so
+*.o
+*.log
+tmp/*
