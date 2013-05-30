@@ -68,6 +68,7 @@ static void fcgi_mark(fcgi_data *data)
 
 static void fcgi_free_req(fcgi_data *data)
 {
+  FCGX_Free(data->req, 1);
   free(data->req);
   free(data);
 }
@@ -136,6 +137,8 @@ static VALUE fcgi_s_accept(VALUE self)
 
     return obj;
   } else {
+    FCGX_Free(req, 1);
+    free(req);
     return Qnil;
   }
 }
