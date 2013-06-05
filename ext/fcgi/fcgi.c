@@ -186,8 +186,7 @@ static VALUE fcgi_finish(VALUE self)
 	extern int errno; \
   if (err) {\
     if (err > 0) {\
-			errno = err;\
-      rb_sys_fail(NULL);\
+      rb_raise(eFCGIStreamError, "unknown error (syscall error)");\
     }\
     else {\
       switch (err) {\
