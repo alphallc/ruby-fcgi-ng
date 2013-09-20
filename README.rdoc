@@ -1,8 +1,6 @@
-= ruby-fcgi-ng - The New generation of FastCGI library for Ruby.
+= fcgi - The New generation of FastCGI library for Ruby.
 
-Version 0.1.0
-Based on original saks's 0.9.0 version of "fcgi" gem.
-Forked after 4 years long silence of saks.
+Version 0.9.1
 
 == Depends
 
@@ -102,6 +100,7 @@ standard CGI library.
 
   fcgi.c     0.1   Copyright (C) 1998-1999  Network Applied Communication Laboratory, Inc.
              0.8   Copyright (C) 2002 MoonWolf <moonwolf@moonwolf.com>
+             0.9   Copyright (C) 2013 MoonWolf <mva@mva.name>
 
   fastcgi.rb 0.7   Copyright (C) 2001 Eli Green
   fcgi.rb    0.8   Copyright (C) 2002 MoonWolf <moonwolf@moonwolf.com>

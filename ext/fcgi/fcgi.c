@@ -89,7 +89,7 @@ static VALUE fcgi_s_accept(VALUE self)
 
   FD_ZERO(&readfds);
   FD_SET(req->listen_sock, &readfds);
-  if (rb_thread_select(req->listen_sock+1, &readfds, NULL, NULL, NULL) < 1) {
+  if (select(req->listen_sock+1, &readfds, NULL, NULL, NULL) < 1) {
     return Qnil;
   }
 
