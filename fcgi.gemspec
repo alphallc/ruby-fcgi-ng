@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name = %q{fcgi}
-  s.version = "0.9.1"
+  s.version = "0.9.2"
 
   s.authors = [%q{mva}]
-  s.date = %q{2013-02-20}
+  s.date = %q{2013-09-20}
   s.description = %q{FastCGI is a language independent, scalable, open extension to CGI that provides high performance without the limitations of server specific APIs. This version aims to be compatible with both 1.8.x and 1.9.x versions of Ruby, and also will be ported to 2.0.x.}
   s.email = %q{mva@mva.name}
   s.extensions = [%q{ext/fcgi/extconf.rb}]
