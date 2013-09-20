@@ -1,6 +1,6 @@
 =begin
 
-fcgi.rb 0.9.0 - fcgi.so compatible pure-ruby FastCGI library
+fcgi.rb 0.9.2 - fcgi.so compatible pure-ruby FastCGI library
 
 fastcgi.rb Copyright (C) 2001 Eli Green
 fcgi.rb    Copyright (C) 2002-2003 MoonWolf <moonwolf@moonwolf.com>
@@ -18,12 +18,12 @@ begin
 rescue LoadError # Load the pure ruby version instead
   # At this point we do have STDERR so put it to some good use
   $stderr.puts "Your FCGI gem does not contain the FCGI shared library, running pure ruby instead"
-  
+
   require 'socket'
   require 'stringio'
-  
+
   class FCGI
-    
+
     def self.is_cgi?
       begin
         s = Socket.for_fd($stdin.fileno)
@@ -113,7 +113,7 @@ rescue LoadError # Load the pure ruby version instead
           exit 0 if graceful
         end
       end
-      
+
       def session
         sock, addr = *@server.accept
         return unless sock
@@ -368,7 +368,7 @@ rescue LoadError # Load the pure ruby version instead
 
       attr_reader :role
       attr_reader :flags
-      
+
       def make_body
         [@role, @flags, 0, 0, 0, 0, 0].pack(BODY_FORMAT)
       end
@@ -448,14 +448,14 @@ rescue LoadError # Load the pure ruby version instead
         end
         result
       end
-      
+
       def self.read_pair(buf)
         nlen = read_length(buf)
         vlen = read_length(buf)
         [buf.slice!(0, nlen), buf.slice!(0, vlen)]
       end
-      
-      
+
+
       if "".respond_to?(:bytes) # Ruby 1.9 string semantics
         def self.read_length(buf)
           if buf[0].bytes.first >> 7 == 0
@@ -587,7 +587,7 @@ end # begin
 class FCGI
   def self.each_cgi(*args)
     require 'cgi'
-    
+
     eval(<<-EOS,TOPLEVEL_BINDING)
     class CGI
       public :env_table
@@ -622,17 +622,17 @@ class FCGI
       end # FCGI::CGI class
     end # FCGI class
     EOS
-    
+
     if FCGI::is_cgi?
       yield ::CGI.new(*args)
     else
       exit_requested = false
       FCGI::each do |request|
-        
+
         $stdout, $stderr = request.out, request.err
-        
+
         yield CGI.new(request, *args)
-        
+
         request.finish
       end
     end

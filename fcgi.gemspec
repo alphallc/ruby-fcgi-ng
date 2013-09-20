@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{fcgi}
-  s.version = "0.9.1"
+  s.version = "0.9.2"
 
   s.authors = [%q{mva}]
   s.date = %q{2013-02-20}
