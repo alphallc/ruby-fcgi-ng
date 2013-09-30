@@ -2,6 +2,7 @@
  * fcgi.c
  * Copyright (C) 1998-1999  Network Applied Communication Laboratory, Inc.
  * Copyright (C) 2002-2006  MoonWolf <moonwolf@moonwolf.com>
+ * Copyright (C) 2012-2014  mva <mva@mva.name>
  */
 
 #include <stdio.h>
