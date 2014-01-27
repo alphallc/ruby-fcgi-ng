@@ -1,4 +1,0 @@
-* move from select() to rb_thread_fd_select(),
-	since rb_thread_select() is deprecated
-	(and I have no time to do that now, unfortunately)
-	any help is welcomed.

@@ -78,7 +78,7 @@ static VALUE fcgi_s_accept(VALUE self)
 {
   int status;
   FCGX_Request *req;
-  fd_set readfds;
+  rb_fdset_t readfds;
 
   req = ALLOC(FCGX_Request);
 
@@ -88,9 +88,9 @@ static VALUE fcgi_s_accept(VALUE self)
     return Qnil;
   }
 
-  FD_ZERO(&readfds);
-  FD_SET(req->listen_sock, &readfds);
-  if (select(req->listen_sock+1, &readfds, NULL, NULL, NULL) < 1) {
+  rb_fd_init(&readfds);
+  rb_fd_set(req->listen_sock, &readfds);
+  if (rb_thread_fd_select(readfds.maxfd, &readfds, NULL, NULL, NULL) < 1) {
     return Qnil;
   }
 
