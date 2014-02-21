@@ -115,7 +115,7 @@ rescue LoadError # Load the pure ruby version instead
       end
 
       def session
-        sock, addr = *@server.accept
+        sock, _ = *@server.accept
         return unless sock
         fsock = FastCGISocket.new(sock)
         req = next_request(fsock)
@@ -196,7 +196,7 @@ rescue LoadError # Load the pure ruby version instead
       def read_record
         header = @socket.read(Record::HEADER_LENGTH) or return nil
         return nil unless header.size == Record::HEADER_LENGTH
-        version, type, reqid, clen, padlen, reserved = *Record.parse_header(header)
+        _, type, reqid, clen, padlen, _ = *Record.parse_header(header)
         Record.class_for(type).parse(reqid, read_record_body(clen, padlen))
       end
 
@@ -356,7 +356,7 @@ rescue LoadError # Load the pure ruby version instead
       BODY_FORMAT = 'nCC5'
 
       def BeginRequestRecord.parse(id, body)
-        role, flags, *reserved = *body.unpack(BODY_FORMAT)
+        role, flags, *_ = *body.unpack(BODY_FORMAT)
         new(id, role, flags)
       end
 
@@ -626,7 +626,6 @@ class FCGI
     if FCGI::is_cgi?
       yield ::CGI.new(*args)
     else
-      exit_requested = false
       FCGI::each do |request|
 
         $stdout, $stderr = request.out, request.err
