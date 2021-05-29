@@ -12,6 +12,9 @@
 #include <fcntl.h>
 
 #include "ruby.h"
+#ifdef HAVE_RUBY_VERSION_H
+#include "ruby/version.h"
+#endif
 
 #ifndef RSTRING_PTR
 #define RSTRING_PTR(str) (RSTRING(str)->ptr)
@@ -262,7 +265,9 @@ static VALUE fcgi_stream_putc(VALUE self, VALUE ch)
   FCGX_Stream *stream;
   int c;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   rb_secure(4);
+#endif
   Data_Get_Stream(self, stream);
   if ((c = FCGX_PutChar(NUM2INT(ch), stream)) == EOF)
     CHECK_STREAM_ERROR(stream);
@@ -274,7 +279,9 @@ static VALUE fcgi_stream_write(VALUE self, VALUE str)
   FCGX_Stream *stream;
   int len;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   rb_secure(4);
+#endif
   Data_Get_Stream(self, stream);
   str = rb_obj_as_string(str);
   len = FCGX_PutStr(RSTRING_PTR(str), RSTRING_LEN(str), stream);
@@ -407,9 +414,11 @@ static VALUE fcgi_stream_ungetc(VALUE self, VALUE ch)
   FCGX_Stream *stream;
   int c;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   Data_Get_Stream(self, stream);
   c = FCGX_UnGetChar(NUM2INT(ch), stream);
   CHECK_STREAM_ERROR(stream);
@@ -422,9 +431,11 @@ static VALUE fcgi_stream_gets(VALUE self) {
   VALUE str = rb_str_new(0,0);
   OBJ_TAINT(str);
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
 
   Data_Get_Stream(self, stream);
 
@@ -449,9 +460,11 @@ static VALUE fcgi_stream_read(int argc, VALUE *argv, VALUE self)
   char *buff;
   int n;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
 
   Data_Get_Stream(self, stream);
 
@@ -502,9 +515,11 @@ static VALUE fcgi_stream_eof(VALUE self)
 {
   FCGX_Stream *stream;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   Data_Get_Stream(self, stream);
   return FCGX_HasSeenEOF(stream) ? Qtrue : Qfalse;
 }
@@ -513,9 +528,11 @@ static VALUE fcgi_stream_close(VALUE self)
 {
   FCGX_Stream *stream;
 
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: can't close");
   }
+#endif
   Data_Get_Stream(self, stream);
   if (FCGX_FClose(stream) == EOF)
     CHECK_STREAM_ERROR(stream);
@@ -532,33 +549,41 @@ static VALUE fcgi_stream_closed(VALUE self)
 
 static VALUE fcgi_stream_binmode(VALUE self)
 {
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   return self;
 }
 
 static VALUE fcgi_stream_isatty(VALUE self)
 {
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   return Qfalse;
 }
 
 static VALUE fcgi_stream_sync(VALUE self)
 {
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   return Qfalse;
 }
 
 static VALUE fcgi_stream_setsync(VALUE self,VALUE sync)
 {
+#if !defined(RUBY_API_VERSION_MAJOR) || (RUBY_API_VERSION_MAJOR < 3)
   if (rb_safe_level() >= 4 && !OBJ_TAINTED(self)) {
     rb_raise(rb_eSecurityError, "Insecure: operation on untainted IO");
   }
+#endif
   return Qfalse;
 }
 
