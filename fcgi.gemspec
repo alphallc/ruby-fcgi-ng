@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.files = [
     "VERSION",
     "ext/fcgi/MANIFEST",
-    "ext/fcgi/Makefile",
     "ext/fcgi/extconf.rb",
     "ext/fcgi/fcgi.c",
     "lib/fcgi.rb",
